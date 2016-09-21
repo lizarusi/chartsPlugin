@@ -1,0 +1,6 @@
+{
+  "name": "chartSwitcher",
+  "version": "0.0.1",
+  "description": "chartSwitcher used for swich beetween charts",
+  "main": "index.js"
+}
