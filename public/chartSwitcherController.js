@@ -10,6 +10,7 @@ import TileMapType from '/home/dobrik/somestaff/kibana/src/core_plugins/kbn_visl
 import VisLibRenderBotProvider from 'ui/vislib_vis_type/vislib_renderbot';
 import VislibVisualizationsVisTypesProvider from 'ui/vislib/visualizations/vis_types';
 import VisSchemasProvider from 'ui/vis/schemas';
+import template from 'plugins/chartSwitcher/chart.html';
 var module = require('ui/modules').get('chartSwitcher');
 import 'ui/visualize';
 
@@ -23,15 +24,15 @@ module.controller('ChartSwitcherController', function($scope, $route, Private) {
   $scope.chart.listeners.click = switchOnClick;
   $scope.$watch('esResponse', function (resp) {
     $scope.esResp = resp;
+    console.log(resp);
   });
 
   function switchOnClick(){
-    let tempVis = $scope.chart;
-
+    let tempVis = $scope.chart.clone();
     tempVis.setState(Vis.convertOldState(getChartType(), tempVis.state));
-    delete $scope.chart;
     $scope.chart = tempVis;
     $scope.chart.listeners.click = switchOnClick;
+    $scope.esResp = clone($scope.esResp);
   }
   function getChartType(current) {
     let chartType = chooseRandomChartType();
@@ -47,5 +48,11 @@ module.controller('ChartSwitcherController', function($scope, $route, Private) {
   }
 });
 
-
-
+function clone(obj) {
+  if (null == obj || "object" != typeof obj) return obj;
+  var copy = obj.constructor();
+  for (var attr in obj) {
+    if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+  }
+  return copy;
+}
