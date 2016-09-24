@@ -3,6 +3,5 @@ module.exports = function(kibana) {
     uiExports: {
       visTypes: [ 'plugins/chartSwitcher/chartSwitcher' ]
     }
-
   });
 };
